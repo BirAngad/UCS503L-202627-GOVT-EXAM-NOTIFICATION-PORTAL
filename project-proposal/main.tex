@@ -1,242 +1,339 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[margin=1in]{geometry}
+\usepackage{times}
 \usepackage{hyperref}
 \usepackage{enumitem}
-\usepackage{graphicx}
-\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{multirow}
 
-% -----------------------------------------------------
-% bvraghav-tiet-ucs503p-article.sty
-% -----------------------------------------------------
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{1em}{}
 
-% Variable: Lab Instructor
-\makeatletter \newcommand{\BvrSetLabInstructor}[1]{%
-  \gdef\Bvr@LabInstructor{#1}}
-% default
-\newcommand{\Bvr@LabInstructor}{Dr. Raghav %
-  B. Venkataramaiyer}
-% public accessor
-\newcommand{\BvrLabInstructorValue}{\Bvr@LabInstructor}
-\makeatother
-
-% Add subtitle
-\usepackage{titling}
-% -- Set title bold
-\pretitle{\begin{center}\bfseries\fontsize{18bp}{18bp}\selectfont}
-\makeatletter
-\newcommand{\BvrSubtitle}[1]{%
-  \posttitle{%
-    \par\end{center}
-    \begin{center}\large#1\end{center}
-    \vskip 0.5em}%
-}
-\makeatother
-
-% Hints in the section title(s)
-\newcommand{\BvrHint}[1]{%
-  {\normalfont\normalsize\itshape\hfill #1}}
-
-% -----------------------------------------------------
-
-\title{Grievance-Resolution System for a Tier-2/3 City}
-
-\BvrSetLabInstructor{Dr. Raghav B. Venkataramaiyer}
-
-\BvrSubtitle{%
-  Project Proposal for UCS503P  \\
-  Submitted to: \BvrLabInstructorValue \\ \bfseries
-  Thapar Institute of Engineering and Technology% 
-}
-
+\title{\textbf{GovExam Alert: A Government Exam Notification Portal} \\[4pt]
+\large Project Proposal for Software Engineering -- UCS503L}
 \author{
-  Vidya Vaidyanathan, CSED%
-  \thanks{Roll No: \texttt{1024030xxx}, %
-    Email: \texttt{vvaidhanathan\_be24\@thapar.edu}}
-  \and 
-  Bhanurekha Ganesan, CSED%
-  \thanks{Roll No: \texttt{1024030xxx}, %
-    Email: \texttt{bganesan\_be24\@thapar.edu}}
+Submitted to: Dr. Paramveer Sidhu \\
+Thapar Institute of Engineering and Technology \\
+Computer Science and Engineering Department \\[8pt]
+Bir Angad Singh\thanks{Roll No: 1024031150} \quad
+Raghav Mittal\thanks{Roll No: 1024030747} \quad
+Aryan Juneja\thanks{Roll No: 1024030731}
 }
-
-\date{\today}
+\date{14 August 2026}
 
 \begin{document}
 \maketitle
 
-\section{Higher-order goal%
-  \BvrHint{\ldots secondary framing}}
-This project aims to improve sustainable urban
-governance by reducing the time and effort required to
-resolve citizen issues. While the topic is broader than
-any single municipality, the immediate engineering
-objective is to translate \emph{efficient public
-  service delivery} into a measurable, deployable
-software solution.
+\section*{1 Higher-order goal \dots secondary framing}
+This project aims to improve access to public-sector opportunities by reducing the
+time and effort citizens spend searching for government job and exam notifications
+scattered across dozens of official websites. While the broader goal is equitable
+access to public employment information, the immediate engineering objective is to
+translate this into a measurable, deployable web application that aggregates,
+organizes, and alerts users about relevant exam notifications.
 
-\section{Time-to-value %
-\BvrHint{\ldots primary heuristic}}
-\begin{itemize}[leftmargin=0.7cm]
-    \item We will deliver meaningful increments quickly by prototyping the core user workflow and validating it with users within a short iteration window.
-    \item We will prioritize fast feedback over perfection by using weekly iterations (and targeting CI-backed automation early) to reduce release friction.
-    \item Success is defined by what can be delivered and measured in the first iteration, then improved based on user feedback.
+\section*{2 Time-to-value \dots primary heuristic}
+\begin{itemize}[leftmargin=1.5em]
+  \item We will deliver meaningful increments quickly by prototyping the core
+  browse-and-search workflow first and validating it with a small group of student
+  users within a short iteration window.
+  \item We will prioritize fast feedback over perfection by using weekly iterations
+  and targeting CI-backed automation early, to reduce release friction.
+  \item Success is defined by what can be delivered and measured in the first
+  iteration (a working notification listing and search feature), then improved
+  based on user feedback.
 \end{itemize}
 
-\section{Problem Statement}
-Citizens in a tier-2/3 Indian city face delays and uncertainty when reporting local issues (e.g., streetlight outages, water leakage, garbage accumulation, road potholes). Common pain points include:
-\begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Fragmentation:} complaints are often made via multiple channels (calls, social media, paper forms), causing lost context.
-    \item \textbf{Low transparency:} citizens cannot easily see the status of their complaint (e.g., ``received'', ``assigned'', ``in progress'', ``resolved'').
-    \item \textbf{Slow coordination:} departments/field teams lack a unified, trackable workflow with clear ownership.
-    \item \textbf{Poor data quality:} duplicate or incomplete reports force rework and extend resolution time.
+\section*{3 Problem Statement}
+Millions of students and job seekers in India track government exam notifications
+(e.g., SSC, UPSC, State PSCs, Railways, Banking) that are published on separate,
+often poorly designed departmental websites. Common pain points include:
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Fragmentation:} notifications are spread across many official
+  portals, PDFs, and newspaper ads, with no single reliable source.
+  \item \textbf{Missed deadlines:} candidates frequently miss application windows
+  or admit-card release dates due to lack of timely reminders.
+  \item \textbf{Poor discoverability:} existing government sites are hard to
+  search or filter by qualification, category, or state.
+  \item \textbf{Information overload:} unofficial aggregator sites mix outdated,
+  duplicate, or unverified postings with genuine ones, causing confusion.
+\end{itemize}
+\textbf{Why this matters now (contextual relevance):} With a growing number of
+students preparing for competitive government exams, even a simple, reliable,
+and well-organized notification portal can noticeably reduce missed opportunities
+and search effort.
+
+\section*{4 Proposed Solution \dots Software Proposition}
+\subsection*{4.1 Overview}
+Build a web-based ``GovExam Alert'' platform with the following components,
+matching the high-fidelity prototype designed in Figma:
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Home dashboard:} a searchable exam feed with quick-stat cards
+  at the top (Total Exams, Active, Urgent, Reminders) giving users an
+  at-a-glance summary.
+  \item \textbf{Exam cards:} each notification is shown as a card with an
+  organization tag and an urgency badge (e.g., \emph{Ending Soon}, \emph{Urgent},
+  \emph{New}), post count, last date to apply, exam date, and a live
+  ``days left'' countdown.
+  \item \textbf{Save and Apply actions:} each card has a \emph{Save} button
+  (bookmark for later) and a direct \emph{Apply} button linking to the
+  official source.
+  \item \textbf{Reminders tab:} a dedicated bottom-navigation tab where users
+  review notifications they have bookmarked or set alerts for.
+  \item \textbf{Settings:} notification preferences (push notifications,
+  deadline reminders sent a fixed number of days before the last date, and
+  optional email notifications), along with theme and language preferences
+  (see Settings screen details below).
+  \item \textbf{Admin panel (staff-facing, not shown in the citizen prototype):}
+  a small team of student-admins can add, edit, and verify notifications
+  sourced from official sites before they appear on the dashboard.
 \end{itemize}
 
-\textbf{Why this matters now (contextual relevance):} In an urban setting with limited staff bandwidth, even small process improvements can noticeably reduce resolution delays and repeated submissions.
-
-\section{Proposed Solution %
-\BvrHint{\ldots Software Proposition}}
-\subsection{Overview}
-Build a \textbf{web-based} ``Grievance-to-Resolution'' system with the following components:
-\begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Citizen submission portal:} users submit an issue with photo (optional), category, and locality/ward.
-    \item \textbf{Automated triage:} basic duplicate detection and completeness checks.
-    \item \textbf{Department workflow:} assign issues to relevant department/team and update statuses.
-    \item \textbf{Status transparency:} citizens track status and receive notifications when resolved.
-    \item \textbf{Admin/ops dashboard:} performance summaries (resolution time, backlog).
-\end{itemize}
-
-\subsection{Core workflow}
-\begin{enumerate}[leftmargin=0.7cm]
-    \item Citizen creates a complaint and receives a complaint ID immediately.
-    \item System validates completeness and suggests possible duplicates (lightweight similarity on text/category and approximate location).
-    \item Department staff update status (Received $\rightarrow$ Assigned $\rightarrow$ In Progress $\rightarrow$ Resolved).
-    \item Citizen views status updates and resolution notes.
+\subsection*{4.2 Core workflow}
+\begin{enumerate}[leftmargin=1.5em]
+  \item Admin adds a notification with structured fields (title, organization,
+  category, post count, last date, exam date, official link) via the admin
+  panel.
+  \item System validates required fields, auto-computes the urgency badge
+  (\emph{New}/\emph{Ending Soon}/\emph{Urgent}) from the days-left value, and
+  publishes the notification to the public dashboard.
+  \item Citizen/student searches or scans the dashboard, and taps \emph{Save}
+  on notifications of interest, or \emph{Apply} to go directly to the
+  official source.
+  \item System sends a reminder alert (push and/or email, per the user's
+  Settings) a configurable number of days before the application deadline.
+  \item User reviews all saved/reminded exams under the dedicated
+  \emph{Reminders} tab.
 \end{enumerate}
 
-\subsection{Operational constraints for an educational, tier-2/3 setting}
-\begin{itemize}[leftmargin=0.7cm]
-    \item Keep the solution usable on low-to-mid range devices via responsive web design.
-    \item Avoid dependence on advanced research algorithms; focus on workflow, automation, and system correctness.
-    \item Design for deployability using common web hosting and managed databases.
+\subsection*{4.3 UI/UX prototype reference}
+A high-fidelity prototype was designed in Figma covering both Android
+(Material Design 3) and iOS (Human Interface Guidelines) variants, so that
+the responsive web build can borrow consistent, platform-appropriate visual
+patterns (card-based layout, bottom navigation, floating action elements).
+Key screens are summarized in Table~\ref{tab:screens}.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{2.8cm}|p{9.7cm}|}
+\hline
+\textbf{Screen} & \textbf{Key elements} \\
+\hline
+Home dashboard & Search bar; quick-stat cards (Total, Active, Urgent,
+Reminders); exam cards with organization tag, urgency badge, post count,
+last date, exam date, days-left countdown, Save and Apply buttons; bottom
+navigation (Home, Reminders, Settings). \\
+\hline
+Settings & Guest/user profile; notification toggles (Push, Deadline
+Reminders -- 3 days before, Email); theme and language preferences; privacy
+policy and help/support links. \\
+\hline
+Design system cover & Confirms dual design-system coverage (Material Design
+3 for Android, Human Interface Guidelines for iOS) used as the visual
+reference for the responsive web build. \\
+\hline
+\end{tabular}
+\label{tab:screens}
+\caption{Prototype screens and their key UI elements}
+\end{table}
+
+\subsection*{4.4 Operational constraints for an educational, second-year setting}
+\begin{itemize}[leftmargin=1.5em]
+  \item Keep the solution usable on low-to-mid range devices via responsive web
+  design, since many users access it on mobile.
+  \item Avoid dependence on advanced research algorithms (e.g., no ML ranking in
+  the first iteration); focus on correct workflow, search, and reminders.
+  \item Design for deployability using common free-tier web hosting and managed
+  databases, appropriate for a two-person, second-year team.
 \end{itemize}
 
-\section{Solution Approach %
-\BvrHint{\ldots Engineering focus}}
-This is an engineering course project, so we focus on scalable administrative and workflow aspects rather than novel algorithm research.
+\section*{5 Solution Approach \dots Engineering focus}
+This is an introductory software engineering course project, so we focus on core
+web-application correctness, usability, and a repeatable delivery pipeline rather
+than research novelty.
 
-\subsection{Duplicate/quality assistance %
-\BvrHint{\ldots non-research}}
-Duplicate detection will be heuristic-based:
-\begin{itemize}[leftmargin=0.7cm]
-    \item Normalize text (category + short description keywords).
-    \item Use a simple similarity measure (e.g., token overlap / TF-IDF cosine with threshold) without claiming state-of-the-art.
-    \item Show top candidate duplicates to staff for decision; never fully auto-delete or auto-reject.
+\subsection*{5.1 Search and filtering \dots non-research}
+Search will be implemented with simple, well-understood techniques:
+\begin{itemize}[leftmargin=1.5em]
+  \item Structured filters on organization, category, state, and qualification
+  (standard database queries, not free-text ranking).
+  \item A basic keyword search over title/organization fields using SQL
+  \texttt{LIKE}/full-text search, without claiming state-of-the-art relevance
+  ranking.
+  \item Sorting by nearest deadline as the default view, since urgency matters
+  most to users.
 \end{itemize}
 
-\subsection{Web architecture %
-\BvrHint{\ldots web-based solution}}
+\subsection*{5.2 Web architecture \dots web-based solution}
 A typical 3-tier web architecture:
-\begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Frontend:} responsive UI for citizens and staff (status pages, submission form, dashboard).
-    \item \textbf{Backend API:} authentication, complaint submission, status transitions, assignment logic.
-    \item \textbf{Database:} store users, complaints, status history, attachments metadata.
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Frontend:} responsive UI for browsing, searching, and bookmarking
+  notifications (built with React/HTML-CSS-JS).
+  \item \textbf{Backend API:} authentication, CRUD for notifications, bookmarks,
+  and reminder scheduling logic (built with Node.js/Express or Flask).
+  \item \textbf{Database:} stores users, notifications, bookmarks, and reminder
+  logs (e.g., PostgreSQL/MySQL/MongoDB).
 \end{itemize}
 
-\subsection{CI/CD and fast delivery enabler}
+\subsection*{5.3 CI/CD and fast delivery enabler}
 CI/CD will be used to:
-\begin{itemize}[leftmargin=0.7cm]
-    \item Automatically build and run tests on every change.
-    \item Produce repeatable deployment artifacts to staging.
-    \item Enable safe and frequent releases of incremental features.
+\begin{itemize}[leftmargin=1.5em]
+  \item Automatically build and run tests on every change.
+  \item Produce repeatable deployment artifacts to a staging environment.
+  \item Enable safe and frequent releases of incremental features, e.g., adding
+  the alerts module after the core listing is stable.
 \end{itemize}
 
-\section{Evaluation Criterion %
-\BvrHint{\ldots measurable and attributable}}
+\section*{6 Evaluation Criterion \dots measurable and attributable}
 We define success using measurable metrics tied to the core workflow.
 
-\subsection{Primary evaluation metric}
-\textbf{Time-to-acknowledgement (TTA):} time between complaint submission and ``Received/Assigned'' status creation in the system.
-\begin{itemize}[leftmargin=0.7cm]
-    \item Target: median TTA $\le$ 2 hours during pilot window.
-    \item Attribution: measured from database timestamps (submission vs. first status update by staff).
+\subsection*{6.1 Primary evaluation metric}
+\textbf{Time-to-discovery (TTD):} time taken by a test user to find a relevant
+notification matching a given profile (e.g., ``state government, graduate,
+clerical post'') using the portal, compared to manually searching official
+sites.
+\begin{itemize}[leftmargin=1.5em]
+  \item \textbf{Target:} median TTD $\leq$ 60 seconds during pilot testing,
+  at least 3x faster than manual search.
+  \item \textbf{Attribution:} measured via timed usability tasks with pilot
+  users and application logs (search-to-click timestamps).
 \end{itemize}
 
-\subsection{Secondary evaluation metrics}
-\begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Resolution time reduction:} reduce time-to-resolved compared to baseline process (even if baseline is collected via survey).
-    \item \textbf{Duplicate rate:} percentage of complaints flagged as duplicates and resolved without rework.
-    \item \textbf{User clarity:} citizen-reported clarity of status using a simple 1--5 feedback question.
-    \item \textbf{Reliability:} availability of staging/production for login and submission during business hours (e.g., $\ge$ 99\% uptime in pilot).
+\subsection*{6.2 Secondary evaluation metrics}
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{3.2cm}|p{7cm}|p{3.5cm}|}
+\hline
+\textbf{Metric} & \textbf{Description} & \textbf{Target} \\
+\hline
+Alert reliability & Percentage of scheduled reminders successfully delivered before the relevant deadline & $\geq$ 95\% \\
+\hline
+Data freshness & Average delay between an official notification being published and it appearing on the portal & $\leq$ 24 hours \\
+\hline
+User clarity & User-reported clarity of notification details using a simple 1--5 feedback question & Average $\geq$ 4/5 \\
+\hline
+Reliability & Availability of staging/production for browsing and login & $\geq$ 99\% uptime in pilot \\
+\hline
+\end{tabular}
+\caption{Secondary evaluation metrics}
+\end{table}
+
+\subsection*{6.3 Pilot validation plan \dots high-level}
+\begin{itemize}[leftmargin=1.5em]
+  \item Recruit 10--15 pilot users (fellow students preparing for government
+  exams) and 1--2 student-admins to simulate the verification workflow.
+  \item Compare time-to-discovery and satisfaction before/after within the
+  iteration window using short interviews and task timing.
 \end{itemize}
 
-\subsection{Pilot validation plan %
-\BvrHint{\ldots high-level}}
-\begin{itemize}[leftmargin=0.7cm]
-    \item Recruit 10--20 pilot users (citizens) and 3--5 staff roles (department simulation if real staff unavailable).
-    \item Compare metrics before/after within the iteration window by logging baseline estimates via short interviews or existing process observations.
-\end{itemize}
-
-\section{Scalability %
-\BvrHint{\ldots with foresight}}
+\section*{7 Scalability \dots with foresight}
 The proposition should scale in both theoretical and practical senses.
-
-\begin{enumerate}[leftmargin=0.7cm]
-    \item \textbf{Scalable (theoretically):} The system should support growth in number of complaints and concurrent dashboard usage by:
-    \begin{itemize}[leftmargin=0.7cm]
-        \item decoupling components (frontend/backend),
-        \item enabling pagination and indexing for common queries,
-        \item using stateless API design.
-    \end{itemize}
-    
-    \item \textbf{Operationally deployable (practically):} The system should run on common web hosting:
-    \begin{itemize}[leftmargin=0.7cm]
-        \item managed database,
-        \item containerized or platform-hosted deployment,
-        \item CI/CD pipeline for staging/production.
-    \end{itemize}
+\begin{enumerate}[leftmargin=1.5em]
+  \item \textbf{Scalable (theoretically):} the system should support growth in
+  the number of notifications, categories, and concurrent users by:
+  \begin{itemize}
+    \item decoupling frontend and backend,
+    \item enabling pagination and indexing for common search queries,
+    \item using a stateless API design so the backend can be horizontally
+    scaled.
+  \end{itemize}
+  \item \textbf{Operationally deployable (practically):} the system should run
+  on common web hosting:
+  \begin{itemize}
+    \item managed database (e.g., a free-tier cloud database),
+    \item containerized or platform-hosted deployment (e.g., Render, Railway,
+    Vercel),
+    \item CI/CD pipeline for staging/production.
+  \end{itemize}
 \end{enumerate}
 
-\section{Engine availability heuristic}
-A mature set of ``engines'' (tooling/services) is available to implement this as a web-based project:
-\begin{itemize}[leftmargin=0.7cm]
-    \item Web framework for REST APIs and templated/reactive pages.
-    \item Managed relational or document database.
-    \item Authentication approach (token-based or session-based).
-    \item Object storage for optional attachments (or local storage for pilot).
-    \item Test framework for unit/integration tests.
-    \item CI runner and staging deployment target.
+\section*{8 Engine availability heuristic}
+A mature set of ``engines'' (tooling/services) is available to implement this as
+a web-based project, appropriate for a second-year skill level:
+\begin{itemize}[leftmargin=1.5em]
+  \item Web framework for REST APIs and reactive frontend pages (Express/Flask
+  + React).
+  \item Managed relational or document database (PostgreSQL/MongoDB Atlas free
+  tier).
+  \item Authentication approach (token-based, e.g., JWT, or session-based).
+  \item Scheduled job/cron mechanism for sending reminder alerts.
+  \item Test framework for unit/integration tests (e.g., Jest/PyTest).
+  \item CI runner and staging deployment target (GitHub Actions + free-tier
+  host).
 \end{itemize}
-We will use these mature components to focus on workflow design, correctness, and measurement rather than inventing new infrastructure.
+We will use these mature, well-documented components to focus on workflow
+design, correctness, and measurement rather than inventing new infrastructure.
 
-\section{Project scope and deliverables %
-\BvrHint{\ldots iteration-friendly}}
-\subsection{Initial deliverable %
-\BvrHint{\ldots first iteration}}
-\begin{itemize}[leftmargin=0.7cm]
-    \item Citizen submission form + complaint ID generation
-    \item Staff workflow: update status and assignment
-    \item Citizen status page: view timeline/history
-    \item Basic logging and timestamps for TTA measurement
-    \item CI: build + backend unit tests + linting
-    \item CD to staging with a single command or pipeline job
-\end{itemize}
+\section*{9 Project scope and deliverables \dots iteration-friendly}
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{2.2cm}|p{9cm}|p{2.5cm}|}
+\hline
+\textbf{Iteration} & \textbf{Deliverable} & \textbf{Priority} \\
+\hline
+\multirow{7}{2.2cm}{9.1 Initial (first iteration)}
+ & Home dashboard: search bar + quick-stat cards (Total, Active, Urgent,
+ Reminders) & Must-have \\
+\cline{2-3}
+ & Exam cards with organization tag, urgency badge, post count, dates,
+ days-left countdown & Must-have \\
+\cline{2-3}
+ & Save (bookmark) and Apply (official link) actions on each card &
+ Must-have \\
+\cline{2-3}
+ & Admin panel: add/edit/publish a notification & Must-have \\
+\cline{2-3}
+ & Basic logging and timestamps for TTD measurement & Must-have \\
+\cline{2-3}
+ & CI: build + backend unit tests + linting & Must-have \\
+\cline{2-3}
+ & CD to staging with a single command or pipeline job & Must-have \\
+\hline
+\multirow{4}{2.2cm}{9.2 Subsequent} 
+ & Reminders tab + Settings (push, deadline, and email notification
+ toggles) & Should-have \\
+\cline{2-3}
+ & User accounts and category preferences & Should-have \\
+\cline{2-3}
+ & Keyword search with basic full-text matching & Could-have \\
+\cline{2-3}
+ & Admin dashboard for notification counts and freshness metrics & Could-have \\
+\hline
+\end{tabular}
+\caption{Project deliverables by iteration}
+\end{table}
 
-\subsection{Subsequent deliverables}
-\begin{itemize}[leftmargin=0.7cm]
-    \item Lightweight duplicate suggestions with staff review
-    \item Notification layer (email/SMS optional in later iteration; can start with in-app notifications)
-    \item Admin dashboard for metrics and backlog
-    \item Improved search/filtering and indexed queries for scale readiness
-\end{itemize}
+\section*{10 Risks and mitigations}
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{3.7cm}|p{9.5cm}|}
+\hline
+\textbf{Risk} & \textbf{Mitigation} \\
+\hline
+Data accuracy & Incorrect or outdated notifications could mislead users; mitigate by always linking to the official source and having a student-admin verification step before publishing. \\
+\hline
+Data entry overhead & Manually adding notifications is time-consuming for a two-person team; mitigate by keeping the admin form minimal and scoping the pilot to a small set of exam categories. \\
+\hline
+Evaluation measurement ambiguity & Instrument timestamps and define clear notification-status states (Draft, Published, Expired) before development begins. \\
+\hline
+Operational issues in pilot & Use staging early; ensure CI/CD produces repeatable deployments before the pilot begins. \\
+\hline
+\end{tabular}
+\caption{Risks and mitigations}
+\end{table}
 
-\section{Risks and mitigations}
-\begin{itemize}[leftmargin=0.7cm]
-    \item \textbf{Data privacy / consent:} minimize collected data; keep attachments optional; store only what is needed.
-    \item \textbf{Staff adoption:} provide an easy UI for status updates; keep workflow steps minimal; include shortcuts.
-    \item \textbf{Evaluation measurement ambiguity:} instrument timestamps and define clear status transitions before development begins.
-    \item \textbf{Operational issues in pilot:} use staging early; ensure CI/CD produces repeatable deployments.
-\end{itemize}
-
-\section{Summary}
-This project proposes a deployable web platform to reduce grievance handling delays in a tier-2/3 city context. It meets the course criteria by emphasizing time-to-value through rapid iterations, implementing CI/CD to support frequent safe releases, and using measurable evaluation criteria (especially time-to-acknowledgement). It remains focused on engineering workflow and scalability readiness rather than research-driven novelty.
+\section*{11 Summary}
+This project proposes a deployable web platform, GovExam Alert, to reduce the
+time
+and effort citizens spend discovering and tracking government exam and job
+notifications. It meets the course criteria by emphasizing time-to-value
+through rapid iterations, implementing CI/CD to support frequent safe
+releases, and using measurable evaluation criteria (especially
+time-to-discovery). As a web-based application project scoped for a
+third-year, three-member team, it remains focused on engineering workflow,
+usability, and scalability readiness rather than research-driven novelty.
 
 \end{document}
